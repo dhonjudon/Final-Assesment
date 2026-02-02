@@ -28,7 +28,8 @@ $errors = [];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = sanitize($_POST['name'] ?? '');
     $phone = sanitize($_POST['phone'] ?? '');
-    if (!$name) $errors[] = 'Name is required.';
+    if (!$name)
+        $errors[] = 'Name is required.';
     if (!$errors) {
         $pdo->beginTransaction();
         $stmt = $pdo->prepare('INSERT INTO orders (customer_name, customer_phone, total) VALUES (?, ?, ?)');
@@ -55,23 +56,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 <?php else: ?>
-    <?php if ($errors): ?><ul style="color:red;"><?php foreach ($errors as $e) echo "<li>$e</li>"; ?></ul><?php endif; ?>
-    <form method="post" action="">
-        <label>Name: <input type="text" name="name" required></label><br><br>
-        <label>Phone: <input type="text" name="phone"></label><br><br>
-        <button type="submit" class="button">Place Order</button>
-    </form>
-    <h3>Order Summary</h3>
-    <table class="table">
-        <tr><th>Name</th><th>Qty</th><th>Subtotal</th></tr>
-        <?php foreach ($items as $item): ?>
-        <tr>
-            <td><?= sanitize($item['name']) ?></td>
-            <td><?= $item['quantity'] ?></td>
-            <td>रु <?= number_format($item['subtotal'],2) ?></td>
-        </tr>
-        <?php endforeach; ?>
-        <tr><td colspan="2"><strong>Total</strong></td><td><strong>रु <?= number_format($total,2) ?></strong></td></tr>
-    </table>
+    <div class="checkout-container">
+        <div class="checkout-form">
+            <?php if ($errors): ?>
+                <ul style="color:red;"><?php foreach ($errors as $e)
+                    echo "<li>$e</li>"; ?></ul>
+            <?php endif; ?>
+            <h3>Delivery Information</h3>
+            <form method="post" action="">
+                <label>Name: <input type="text" name="name" required></label>
+                <label>Phone: <input type="tel" name="phone" id="phoneInput" inputmode="numeric" pattern="[0-9]*"
+                        placeholder="Optional" maxlength="15"></label>
+                <button type="submit" class="button" style="width: 100%; margin-top: 1rem;">Place Order</button>
+            </form>
+            <script>
+                document.getElementById('phoneInput').addEventListener('input', function (e) {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+            </script>
+        </div>
+        <div class="checkout-summary">
+            <h3>Order Summary</h3>
+            <table class="table">
+                <tr>
+                    <th>Item</th>
+                    <th>Qty</th>
+                    <th>Price</th>
+                </tr>
+                <?php foreach ($items as $item): ?>
+                    <tr>
+                        <td><?= sanitize($item['name']) ?></td>
+                        <td><?= $item['quantity'] ?></td>
+                        <td>रु <?= number_format($item['subtotal'], 2) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                <tr>
+                    <td colspan="2"><strong>Total</strong></td>
+                    <td><strong>रु <?= number_format($total, 2) ?></strong></td>
+                </tr>
+            </table>
+        </div>
+    </div>
 <?php endif; ?>
 <?php include '../includes/footer.php'; ?>

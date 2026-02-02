@@ -5,11 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patio Management System</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=<?= time() ?>">
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../assets/img/patio_fav/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../assets/img/patio_fav/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../assets/img/patio_fav/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../assets/img/patio_fav/apple-touch-icon.png">
+    <link rel="manifest" href="../assets/img/patio_fav/site.webmanifest">
 </head>
 
-<body>
-    <header>
+<body style="padding-top: 120px !important;">
+    <header
+        style="position: fixed !important; top: 0; left: 0; right: 0; width: 100%; z-index: 1000; background: #5d4037; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
         <h1>Patio Café Management System</h1>
         <nav>
             <a href="menu.php">Menu</a>

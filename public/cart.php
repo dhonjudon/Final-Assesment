@@ -120,12 +120,55 @@ if ($cart) {
     <div class="cart-actions">
         <div class="cart-left">
             <a href="menu.php" class="button button-secondary">Continue Shopping</a>
-            <a href="cart.php?clear=1" class="button button-danger"
-                onclick="return confirm('Clear all items from cart?');">Clear Cart</a>
+            <a href="#" class="button button-danger" onclick="openClearCartModal(); return false;">Clear Cart</a>
         </div>
         <a href="checkout.php" class="button button-large">Proceed to Checkout</a>
     </div>
     <!-- Sticky checkout button for mobile -->
     <a href="checkout.php" class="button sticky-checkout">Checkout</a>
+
+    <!-- Clear Cart Confirmation Modal -->
+    <div id="clearCartModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Clear Cart</h3>
+                <button class="modal-close" onclick="closeClearCartModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Clear all items from cart?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="button" onclick="confirmClearCart()">OK</button>
+                <button class="button button-secondary" onclick="closeClearCartModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openClearCartModal() {
+            const modal = document.getElementById('clearCartModal');
+            modal.style.display = 'flex';
+            modal.style.visibility = 'visible';
+            modal.style.opacity = '1';
+        }
+
+        function closeClearCartModal() {
+            const modal = document.getElementById('clearCartModal');
+            modal.style.display = 'none';
+            modal.style.visibility = 'hidden';
+            modal.style.opacity = '0';
+        }
+
+        function confirmClearCart() {
+            window.location.href = 'cart.php?clear=1';
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById('clearCartModal');
+            if (event.target == modal) {
+                closeClearCartModal();
+            }
+        }
+    </script>
 <?php endif; ?>
 <?php include '../includes/footer.php'; ?>

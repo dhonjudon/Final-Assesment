@@ -39,6 +39,8 @@ project_root/
 3. Place the project folder in your web server root (e.g., `htdocs` for XAMPP).
 4. Update database credentials in `config/db.php` if needed.
 5. Access the admin panel via `http://localhost/final-ass/public/login.php`.
+   - **Admin Username:** `root_admin`
+   - **Admin Password:** `123456789`
 6. Access the public menu via `http://localhost/final-ass/public/menu.php`.
 
 ## Database Credentials (default for XAMPP)

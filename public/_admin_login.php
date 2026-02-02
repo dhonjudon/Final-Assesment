@@ -26,9 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <h2>Admin Login</h2>
 <?php if ($error): ?>
     <p style="color:red;"><?= $error ?></p><?php endif; ?>
-<form method="post" action="">
-    <label>Username: <input type="text" name="username" required></label><br><br>
-    <label>Password: <input type="password" name="password" required></label><br><br>
+<form method="post" action="" autocomplete="off">
+    <label>Username: <input type="text" name="username" required autocomplete="off" readonly
+            onfocus="this.removeAttribute('readonly');"></label>
+    <label>Password: <input type="password" name="password" required autocomplete="off" readonly
+            onfocus="this.removeAttribute('readonly');"></label>
     <button type="submit" class="button">Login</button>
 </form>
 <?php include '../includes/footer.php'; ?>

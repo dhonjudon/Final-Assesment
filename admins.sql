@@ -6,11 +6,11 @@ CREATE TABLE IF NOT EXISTS admins (
 );
 
 -- Remove any old admin user
-DELETE FROM admins WHERE username = 'admin';
+DELETE FROM admins WHERE username = 'root_admin';
 
--- Default admin user (username: admin, password: admin123)
+-- Default admin user (username: root_admin, password: 123456789)
 INSERT INTO admins (username, password) VALUES (
-    'admin',
-    '$2y$10$u1Qw6Qn6Qw6Qw6Qw6Qw6eOQw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6Qw6'
+    'root_admin',
+    '$2y$10$MHHk6aTdDwmYXSc2H4BZRO4DknaelDd.kkYKvvXnC1fnd1AADP7E.'
 );
--- The above hash is for password 'admin123'
+-- The above hash is for password '123456789'

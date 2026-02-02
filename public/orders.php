@@ -156,9 +156,7 @@ foreach ($all_orders as $order) {
 <div class="orders-actions-bar">
     <a href="revenue.php" class="button button-secondary">View Revenue Reports</a>
     <?php if ($total_orders > 0): ?>
-        <a href="#"
-            onclick="if(confirm('Reset all orders for today? This will archive orders and log revenue. This cannot be undone!')) { window.location.href='orders.php?reset_daily=confirm'; } return false;"
-            class="button button-danger">Reset Daily Orders</a>
+        <a href="#" onclick="openResetModal(); return false;" class="button button-danger">Reset Daily Orders</a>
     <?php endif; ?>
 </div>
 
@@ -303,5 +301,49 @@ foreach ($all_orders as $order) {
         <p>No orders yet. When customers place orders, they will appear here.</p>
     </div>
 <?php endif; ?>
+
+<!-- Reset Daily Orders Modal -->
+<div id="resetModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Reset Daily Orders</h3>
+            <button class="modal-close" onclick="closeResetModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Reset all orders for today? This will archive orders and log revenue. This cannot be undone!</p>
+        </div>
+        <div class="modal-footer">
+            <button class="button" onclick="confirmReset()">OK</button>
+            <button class="button button-secondary" onclick="closeResetModal()">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openResetModal() {
+        const modal = document.getElementById('resetModal');
+        modal.style.display = 'flex';
+        modal.style.visibility = 'visible';
+        modal.style.opacity = '1';
+    }
+
+    function closeResetModal() {
+        const modal = document.getElementById('resetModal');
+        modal.style.display = 'none';
+        modal.style.visibility = 'hidden';
+        modal.style.opacity = '0';
+    }
+
+    function confirmReset() {
+        window.location.href = 'orders.php?reset_daily=confirm';
+    }
+
+    window.onclick = function (event) {
+        const modal = document.getElementById('resetModal');
+        if (event.target == modal) {
+            closeResetModal();
+        }
+    }
+</script>
 
 <?php include '../includes/footer.php'; ?>
