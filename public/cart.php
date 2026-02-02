@@ -48,13 +48,13 @@ if ($cart) {
         <?php foreach ($items as $item): ?>
         <tr>
             <td><?= sanitize($item['name']) ?></td>
-            <td>$<?= number_format($item['price'],2) ?></td>
+            <td>रु <?= number_format($item['price'],2) ?></td>
             <td><?= $item['quantity'] ?></td>
-            <td>$<?= number_format($item['subtotal'],2) ?></td>
+            <td>रु <?= number_format($item['subtotal'],2) ?></td>
             <td><a href="cart.php?remove=<?= $item['id'] ?>" class="button">Remove</a></td>
         </tr>
         <?php endforeach; ?>
-        <tr><td colspan="3"><strong>Total</strong></td><td colspan="2"><strong>$<?= number_format($total,2) ?></strong></td></tr>
+        <tr><td colspan="3"><strong>Total</strong></td><td colspan="2"><strong>रु <?= number_format($total,2) ?></strong></td></tr>
     </table>
     <a href="checkout.php" class="button">Checkout</a>
 <?php endif; ?>

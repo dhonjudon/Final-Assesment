@@ -61,10 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <tr>
             <td><?= sanitize($item['name']) ?></td>
             <td><?= $item['quantity'] ?></td>
-            <td>$<?= number_format($item['subtotal'],2) ?></td>
+            <td>रु <?= number_format($item['subtotal'],2) ?></td>
         </tr>
         <?php endforeach; ?>
-        <tr><td colspan="2"><strong>Total</strong></td><td><strong>$<?= number_format($total,2) ?></strong></td></tr>
+        <tr><td colspan="2"><strong>Total</strong></td><td><strong>रु <?= number_format($total,2) ?></strong></td></tr>
     </table>
 <?php endif; ?>
 <?php include '../includes/footer.php'; ?>

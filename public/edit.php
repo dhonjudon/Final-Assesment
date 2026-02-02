@@ -36,8 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = 'Price must be positive.';
 
     if (!$errors) {
-        $stmt = $pdo->prepare('UPDATE menu_items SET name=?, category=?, price=?, description=?, availability=? WHERE id=?');
-        $stmt->execute([$name, $category, $price, $description, $availability, $id]);
+        // Handle image upload
+        $image = $item['image'];
+        if (isset($_FILES['image']) && $_FILES['image']['size'] > 0) {
+            $new_image = uploadImage($_FILES['image']);
+            if ($new_image)
+                $image = $new_image;
+        }
+
+        $stmt = $pdo->prepare('UPDATE menu_items SET name=?, category=?, price=?, description=?, availability=?, image=? WHERE id=?');
+        $stmt->execute([$name, $category, $price, $description, $availability, $image, $id]);
         header('Location: index.php');
         exit;
     }
@@ -55,13 +63,14 @@ $cat_list = $cat_stmt->fetchAll(PDO::FETCH_COLUMN);
             echo "<li>$e</li>"; ?>
     </ul>
 <?php endif; ?>
-<form method="post" action="">
+<form method="post" action="" enctype="multipart/form-data">
     <label>Name: <input type="text" name="name" value="<?= sanitize($item['name']) ?>" required></label><br><br>
     <label>Category:
         <select name="category" required>
             <option value="">Select category</option>
             <?php foreach ($cat_list as $cat): ?>
-                <option value="<?= sanitize($cat) ?>" <?= ($item['category'] == $cat) ? 'selected' : '' ?>><?= sanitize($cat) ?>
+                <option value="<?= sanitize($cat) ?>" <?= ($item['category'] == $cat) ? 'selected' : '' ?>>
+                    <?= sanitize($cat) ?>
                 </option>
             <?php endforeach; ?>
         </select>
@@ -69,6 +78,10 @@ $cat_list = $cat_stmt->fetchAll(PDO::FETCH_COLUMN);
     <label>Price: <input type="number" name="price" step="0.01" min="0.01"
             value="<?= number_format($item['price'], 2) ?>" required></label><br><br>
     <label>Description: <textarea name="description"><?= sanitize($item['description']) ?></textarea></label><br><br>
+    <label>Image: <input type="file" name="image" accept="image/jpeg,image/png,image/gif"></label>
+    <?php if ($item['image']): ?>
+        <br>(Current: <?= sanitize($item['image']) ?>)
+    <?php endif; ?><br><br>
     <label>Available: <input type="checkbox" name="availability" <?= $item['availability'] ? 'checked' : '' ?>></label><br><br>
     <button type="submit" class="button">Update Item</button>
     <a href="index.php" class="button">Cancel</a>

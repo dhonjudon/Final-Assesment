@@ -6,12 +6,13 @@ session_start();
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = sanitize($_POST['username'] ?? '');
+    $username = trim($_POST['username'] ?? '');
     $password = $_POST['password'] ?? '';
 
     $stmt = $pdo->prepare('SELECT * FROM admins WHERE username = ? LIMIT 1');
     $stmt->execute([$username]);
     $admin = $stmt->fetch();
+
     if ($admin && password_verify($password, $admin['password'])) {
         $_SESSION['admin_logged_in'] = true;
         header('Location: index.php');

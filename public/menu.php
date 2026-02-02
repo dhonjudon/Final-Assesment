@@ -20,8 +20,11 @@ foreach ($items as $item) {
     <div class="menu-category">
         <?php foreach ($catItems as $item): ?>
             <div class="menu-item">
-                <img src="/final-ass/assets/img/<?= strtolower(str_replace(' ', '_', $item['name'])) ?>.jpg"
-                    alt="<?= sanitize($item['name']) ?>">
+                <?php if ($item['image']): ?>
+                    <img src="/final-ass/assets/img/<?= sanitize($item['image']) ?>" alt="<?= sanitize($item['name']) ?>">
+                <?php else: ?>
+                    <img src="/final-ass/assets/img/placeholder.jpg" alt="No image">
+                <?php endif; ?>
                 <strong><?= sanitize($item['name']) ?></strong>
                 <div class="price">रु <?= number_format($item['price'], 2) ?></div>
                 <div class="desc"><?= sanitize($item['description']) ?></div>
